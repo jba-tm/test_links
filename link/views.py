@@ -19,7 +19,7 @@ class LinkView(LoginRequiredMixin, ListView):
         return context
 
 
-class LinkCheckView(View):
+class LinkCheckView(LoginRequiredMixin, View):
     http = ('get',)
 
     def get(self, request, *args, **kwargs):
