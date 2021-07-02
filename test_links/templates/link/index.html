@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Link</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for link in links %}
+
+        <tr id="row-{{ link.id }}">
+            <td class="id">{{ link.id }}</td>
+            <td class="link">{{ link.link }}</td>
+            <td><button onclick="check('{{ link.link }}', '{{ link.id }}')">Check</button></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+<script>
+    const checkerUrl = '/link-check/?link='
+
+    const test = (url) => fetch(checkerUrl + url).then((res) => res.json())
+
+
+    const check = (link, id) => {
+        const row = document.getElementById(`row-${id}`)
+
+        test(link).then(res => {
+            if (res.status_code === 200) {
+                row.classList.add('green')
+            } else {
+                row.classList.add('red')
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>
